@@ -8,9 +8,7 @@ export const SITE_DESCRIPTION =
 export const AUTHOR = {
 	name: 'Mengjie Zhao',
 	role: 'Infra Engineer',
-	// TODO: fill these in
-	email: 'mezhao@linkedin.com',
+	email: 'zmj0129@gmail.com',
 	github: 'https://github.com/mjZhaoElaine',
-	x: 'https://x.com/', // TODO: set X handle
-	linkedin: 'https://www.linkedin.com/in/', // TODO: set LinkedIn slug
+	linkedin: 'https://www.linkedin.com/in/mengjie-zhao-335523150',
 };
