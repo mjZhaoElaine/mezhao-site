@@ -10,7 +10,7 @@ export const AUTHOR = {
 	role: 'Infra Engineer',
 	// TODO: fill these in
 	email: 'mezhao@linkedin.com',
-	github: 'https://github.com/', // TODO: set GitHub URL
+	github: 'https://github.com/mjZhaoElaine',
 	x: 'https://x.com/', // TODO: set X handle
 	linkedin: 'https://www.linkedin.com/in/', // TODO: set LinkedIn slug
 };
