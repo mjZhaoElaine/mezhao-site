@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+
+// Highlighted projects — edit me. Keep the list short (3-5).
+const projects = [
+	{
+		title: 'Project A (placeholder)',
+		blurb:
+			'One sentence on the problem, the approach, and the result with a number. e.g. "Cut P99 inference latency 38% on a sharded LLM fleet by ..."',
+		href: '/projects',
+	},
+	{
+		title: 'Project B (placeholder)',
+		blurb: 'Short blurb on the next flagship project. Numbers > adjectives.',
+		href: '/projects',
+	},
+	{
+		title: 'Project C (placeholder)',
+		blurb: 'Open-source repo: what it is, why it exists, what to look at first.',
+		href: '/projects',
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<h1>{AUTHOR.name}</h1>
+				<p class="lede">
+					{AUTHOR.role} working on large-scale ML and LLM infrastructure.
+					Currently at LinkedIn building <em>[desensitized one-liner about what you build]</em>.
+					Interested in <em>[inference serving / distributed training / GPU systems — pick a lane]</em>.
+				</p>
+				<p>
+					<a href="/cv">CV</a> · <a href="/blog">Writing</a> ·
+					<a href={AUTHOR.github}>GitHub</a> ·
+					<a href={AUTHOR.linkedin}>LinkedIn</a> ·
+					<a href={`mailto:${AUTHOR.email}`}>{AUTHOR.email}</a>
+				</p>
+			</section>
+
+			<section>
+				<h2>Selected projects</h2>
+				<ul class="project-list">
+					{
+						projects.map((p) => (
+							<li>
+								<a href={p.href}>
+									<strong>{p.title}</strong>
+								</a>{' '}
+								— {p.blurb}
+							</li>
+						))
+					}
+				</ul>
+				<p><a href="/projects">More projects →</a></p>
+			</section>
+
+			<section>
+				<h2>Recent writing</h2>
+				{posts.length === 0 ? (
+					<p><em>No posts yet — first post coming soon.</em></p>
+				) : (
+					<ul class="post-list">
+						{posts.map((post) => (
+							<li>
+								<FormattedDate date={post.data.pubDate} />{' '}
+								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+							</li>
+						))}
+					</ul>
+				)}
+				<p><a href="/blog">All writing →</a></p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.hero {
+		margin-bottom: 2.5rem;
+	}
+	.hero h1 {
+		margin-bottom: 0.25em;
+	}
+	.lede {
+		font-size: 1.05rem;
+		line-height: 1.6;
+	}
+	section {
+		margin-bottom: 2rem;
+	}
+	.project-list,
+	.post-list {
+		list-style: none;
+		padding: 0;
+	}
+	.project-list li,
+	.post-list li {
+		margin-bottom: 0.5em;
+	}
+</style>

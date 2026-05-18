@@ -1,0 +1,106 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+// Edit me. Each project: problem -> approach -> stack -> result -> links.
+const projects = [
+	{
+		title: 'Project A (placeholder)',
+		year: '2026',
+		problem: 'What was broken / why it mattered.',
+		approach: 'What you actually did. 2-3 sentences max.',
+		stack: ['Python', 'CUDA', 'PyTorch', 'NCCL'],
+		result: 'Numbers. P99, throughput, $ saved, GPUs reclaimed. Be concrete.',
+		links: [
+			{ label: 'GitHub', href: '#' },
+			{ label: 'Writeup', href: '#' },
+		],
+	},
+	{
+		title: 'Project B (placeholder)',
+		year: '2025',
+		problem: 'Different problem.',
+		approach: 'Different approach.',
+		stack: ['Go', 'Kubernetes', 'gRPC'],
+		result: 'Different numbers.',
+		links: [{ label: 'GitHub', href: '#' }],
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Projects · ${SITE_TITLE}`} description="Selected engineering projects." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Projects</h1>
+			<p>
+				A few things I've worked on. Internal LinkedIn work is desensitized where it appears.
+			</p>
+
+			{
+				projects.map((p) => (
+					<article class="project">
+						<header>
+							<h2>
+								{p.title} <span class="year">· {p.year}</span>
+							</h2>
+						</header>
+						<dl>
+							<dt>Problem</dt>
+							<dd>{p.problem}</dd>
+							<dt>Approach</dt>
+							<dd>{p.approach}</dd>
+							<dt>Stack</dt>
+							<dd>{p.stack.join(', ')}</dd>
+							<dt>Result</dt>
+							<dd>{p.result}</dd>
+						</dl>
+						{p.links.length > 0 && (
+							<p>
+								{p.links.map((l, i) => (
+									<>
+										{i > 0 && ' · '}
+										<a href={l.href}>{l.label}</a>
+									</>
+								))}
+							</p>
+						)}
+					</article>
+				))
+			}
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.project {
+		border-top: 1px solid #ddd;
+		padding-top: 1rem;
+		margin-bottom: 2rem;
+	}
+	.project h2 {
+		margin: 0 0 0.25em 0;
+	}
+	.year {
+		color: #888;
+		font-weight: normal;
+		font-size: 0.9em;
+	}
+	dl {
+		margin: 0;
+	}
+	dt {
+		font-weight: 600;
+		margin-top: 0.5em;
+	}
+	dd {
+		margin: 0 0 0.5em 0;
+	}
+</style>
