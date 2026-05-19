@@ -13,20 +13,22 @@ const posts = (await getCollection('blog'))
 // Highlighted projects — edit me. Keep the list short (3-5).
 const projects = [
 	{
-		title: 'Project A (placeholder)',
+		title: 'Differential serving for CPU→GPU ads ranking',
 		blurb:
-			'One sentence on the problem, the approach, and the result with a number. e.g. "Cut P99 inference latency 38% on a sharded LLM fleet by ..."',
-		href: '/projects',
+			'Dual-fire architecture that scores live ad requests on a TensorFlow CPU champion and a new PyTorch GPU candidate in parallel, with async overlap, asymmetric resolution, and a three-gate routing decision (experiment, tmax, config kill switch) so we can A/B a new realtime inference stack without risking the served path.',
+		href: '/projects#differential-serving',
 	},
 	{
-		title: 'Project B (placeholder)',
-		blurb: 'Short blurb on the next flagship project. Numbers > adjectives.',
-		href: '/projects',
+		title: 'Early Stage Ranking infra (Two-Tower at ~10M scale)',
+		blurb:
+			'Co-designed the infra to collapse retrieval + first-pass ranking into a single Two-Tower scoring layer over the active creative corpus, with nearline embedding generation, version alignment between member and creative towers, and dot-product scoring on sharded indexers. First end-to-end experiment delivered an over-20% CTR lift.',
+		href: '/projects#early-stage-ranking',
 	},
 	{
-		title: 'Project C (placeholder)',
-		blurb: 'Open-source repo: what it is, why it exists, what to look at first.',
-		href: '/projects',
+		title: 'Entity cache rewrite for the ads serving fleet',
+		blurb:
+			'Lead-authored the RFCs and rollout that moved hundreds of ads-serving hosts off direct Oracle reads onto a per-account-partitioned Kafka + Couchbase pipeline, decoupled the in-memory cache from the indexer, and shipped a portable cache library so adjacent ads services could onboard without a rewrite.',
+		href: '/projects#entity-cache-rewrite',
 	},
 ];
 ---
