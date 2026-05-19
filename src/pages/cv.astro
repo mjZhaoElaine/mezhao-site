@@ -25,8 +25,11 @@ import { AUTHOR, SITE_TITLE } from '../consts';
 			<section>
 				<h2>Summary</h2>
 				<p>
-					[One paragraph. Years of experience, areas of depth (LLM serving, distributed training,
-					etc.), what you're looking for next.]
+					Distributed systems / infra engineer working on latency-sensitive realtime ML
+					inference at LinkedIn ads scale — high-QPS GPU serving, embedding pipelines,
+					and entity-cache infrastructure in scope. Going deep on LLM inference serving
+					as the next step: paged attention, continuous batching, disaggregated
+					prefill/decode.
 				</p>
 			</section>
 
@@ -34,20 +37,41 @@ import { AUTHOR, SITE_TITLE } from '../consts';
 				<h2>Experience</h2>
 				<article>
 					<h3>
-						LinkedIn <span class="muted">· Infra Engineer · 20XX – present</span>
+						LinkedIn <span class="muted">· Ads Serving Infra · Apr 2019 – present</span>
 					</h3>
+					<p class="muted">
+						Senior Software Engineer (Mar 2021 – present) ·
+						Software Engineer (Apr 2019 – Mar 2021)
+					</p>
 					<ul>
-						<li>[Bullet: what you built, with a number. Past tense even if ongoing.]</li>
-						<li>[Bullet.]</li>
-						<li>[Bullet.]</li>
-					</ul>
-				</article>
-				<article>
-					<h3>
-						Previous role <span class="muted">· Title · 20XX – 20XX</span>
-					</h3>
-					<ul>
-						<li>[Bullet.]</li>
+						<li>
+							Designed and shipped dual-fire serving (<a href="/projects#differential-serving">differential serving</a>)
+							that scores live ad-ranking requests on a TensorFlow CPU champion and a
+							PyTorch GPU candidate in parallel, with async overlap, three-gate routing
+							(experiment / tmax / config kill switch), and asymmetric resolution —
+							A/B-ing a new GPU inference stack at request granularity without regressing
+							the served path. Authored the RFC; owned the serving-side integration end
+							to end (6 PRs); ~400 QPS sustainable per A100 under a 50ms GPU
+							round-trip budget. <span class="muted">(2026)</span>
+						</li>
+						<li>
+							Co-designed the infra for collapsing retrieval and first-pass ranking into
+							a single <a href="/projects#early-stage-ranking">Two-Tower scoring layer</a>
+							over ~10M creatives, with nearline embedding generation, member-vs-creative
+							version alignment via a model-registry source of truth, and per-shard
+							dot-product scoring on the indexer fleet. Authored the MS1 RFC for the
+							embedding pipeline; first end-to-end BST delivered an over-20% onsite
+							CTR lift. <span class="muted">(2025–2026)</span>
+						</li>
+						<li>
+							Lead-authored the RFCs and rollout that moved hundreds of ads-serving
+							hosts off direct Oracle reads onto a per-account-partitioned Kafka +
+							Couchbase pipeline (<a href="/projects#entity-cache-rewrite">tscp-cache NextGen</a>),
+							with a multi-version state machine, validator-driven reconciliation, and a
+							low-latency shortcut path for inactivation signals. Decoupled the in-memory
+							cache from the indexer and shipped a portable cache library reused by
+							adjacent ads services. <span class="muted">(2021)</span>
+						</li>
 					</ul>
 				</article>
 			</section>
@@ -61,7 +85,14 @@ import { AUTHOR, SITE_TITLE } from '../consts';
 
 			<section>
 				<h2>Education</h2>
-				<p>[School, degree, year.]</p>
+				<p>
+					<strong>Rice University</strong>, Houston, TX — Master of Computer Science
+					<span class="muted">· Aug 2017 – Dec 2018</span>
+				</p>
+				<p>
+					<strong>Wuhan University</strong>, Wuhan, China — Bachelor of Software Engineering
+					<span class="muted">· Sep 2013 – Jun 2017</span>
+				</p>
 			</section>
 		</main>
 		<Footer />
