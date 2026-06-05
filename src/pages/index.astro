@@ -9,28 +9,6 @@ import { AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 const posts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 3);
-
-// Highlighted projects — edit me. Keep the list short (3-5).
-const projects = [
-	{
-		title: 'Differential serving for CPU→GPU ads ranking',
-		blurb:
-			'Dual-fire architecture that scores live ad requests on a TensorFlow CPU champion and a new PyTorch GPU candidate in parallel, with async overlap, asymmetric resolution, and a three-gate routing decision (experiment, tmax, config kill switch) so we can A/B a new realtime inference stack without risking the served path.',
-		href: '/projects#differential-serving',
-	},
-	{
-		title: 'Early Stage Ranking infra (Two-Tower at ~10M scale)',
-		blurb:
-			'Co-designed the infra to collapse retrieval + first-pass ranking into a single Two-Tower scoring layer over the active creative corpus, with nearline embedding generation, version alignment between member and creative towers, and dot-product scoring on sharded indexers. First end-to-end experiment delivered an over-20% CTR lift.',
-		href: '/projects#early-stage-ranking',
-	},
-	{
-		title: 'Entity cache rewrite for the ads serving fleet',
-		blurb:
-			'Lead-authored the RFCs and rollout that moved hundreds of ads-serving hosts off direct Oracle reads onto a per-account-partitioned Kafka + Couchbase pipeline, decoupled the in-memory cache from the indexer, and shipped a portable cache library so adjacent ads services could onboard without a rewrite.',
-		href: '/projects#entity-cache-rewrite',
-	},
-];
 ---
 
 <!doctype html>
@@ -44,36 +22,35 @@ const projects = [
 			<section class="hero">
 				<h1>{AUTHOR.name}</h1>
 				<p class="lede">
-					Infra engineer at LinkedIn working on latency-sensitive realtime ML inference
-					for ads scoring and ranking at internet scale. Currently going deep on LLM
-					inference serving — paged attention, continuous batching, disaggregated serving.
+					Senior software engineer at LinkedIn, working across large-scale ads and ML
+					infrastructure spanning retrieval, ranking, model serving, and the
+					high-throughput, low-latency production systems underneath them. I take work
+					end-to-end: system design, implementation, rollout, and the long tail of
+					operating it reliably at ads scale.
 				</p>
 				<p class="lede">
-					Notes, projects, and writing on infra for ML systems at scale.
+					Most of my recent work is close to production inference — serving paths, request
+					routing, online experimentation, embedding pipelines, and rollout safety under
+					tight latency budgets. I shipped <em>differential serving</em>, which A/B tests a
+					new PyTorch GPU inference stack against the production CPU champion at request
+					granularity, so an entirely new serving path can roll out without risking the one
+					that's live. Earlier I built the stateful ads cache, using hybrid pull + push
+					ingestion to hold snapshot-level consistency, which became the data foundation for
+					nearline embedding inference and downstream realtime serving.
 				</p>
-				<p>
+				<p class="lede">
+					I tend to be the early adopter when an emerging ML workflow needs to become
+					reliable infrastructure: ramping up in a new domain, defining system boundaries,
+					and turning an ambiguous problem into a scalable service. These days that pull is
+					toward LLM inference serving at scale, where I'm increasingly active in the
+					open-source community and contributing to vLLM.
+				</p>
+				<p class="links">
 					<a href="/cv">CV</a> · <a href="/blog">Writing</a> ·
 					<a href={AUTHOR.github}>GitHub</a> ·
 					<a href={AUTHOR.linkedin}>LinkedIn</a> ·
 					<a href={`mailto:${AUTHOR.email}`}>{AUTHOR.email}</a>
 				</p>
-			</section>
-
-			<section>
-				<h2>Selected projects</h2>
-				<ul class="project-list">
-					{
-						projects.map((p) => (
-							<li>
-								<a href={p.href}>
-									<strong>{p.title}</strong>
-								</a>{' '}
-								— {p.blurb}
-							</li>
-						))
-					}
-				</ul>
-				<p><a href="/projects">More projects →</a></p>
 			</section>
 
 			<section>
@@ -99,25 +76,64 @@ const projects = [
 
 <style>
 	.hero {
-		margin-bottom: 2.5rem;
+		margin-bottom: 3.25rem;
 	}
 	.hero h1 {
-		margin-bottom: 0.25em;
+		margin-bottom: 0.4em;
 	}
 	.lede {
-		font-size: 1.05rem;
-		line-height: 1.6;
+		font-size: 1.02rem;
+		line-height: 1.62;
+		color: #2c313a;
+	}
+	.lede:first-of-type {
+		font-size: 1.12rem;
+		color: var(--ink);
+	}
+	.hero .links {
+		margin-top: 1.5em;
+		font-size: 0.95rem;
+		color: var(--muted);
 	}
 	section {
-		margin-bottom: 2rem;
+		margin-bottom: 2.75rem;
 	}
-	.project-list,
+	section > h2 {
+		font-size: 0.82rem;
+		text-transform: uppercase;
+		letter-spacing: 0.07em;
+		color: var(--faint);
+		font-weight: 600;
+		margin-bottom: 1.1em;
+	}
 	.post-list {
 		list-style: none;
 		padding: 0;
+		margin: 0;
 	}
-	.project-list li,
 	.post-list li {
-		margin-bottom: 0.5em;
+		margin-bottom: 0.55em;
+		display: flex;
+		gap: 0.9em;
+	}
+	.post-list :global(time) {
+		color: var(--faint);
+		font-variant-numeric: tabular-nums;
+		font-size: 0.92rem;
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+	.post-list a {
+		text-decoration: none;
+	}
+	.post-list a:hover {
+		text-decoration: underline;
+	}
+	section > p:last-child a {
+		text-decoration: none;
+		font-size: 0.95rem;
+	}
+	section > p:last-child a:hover {
+		text-decoration: underline;
 	}
 </style>
